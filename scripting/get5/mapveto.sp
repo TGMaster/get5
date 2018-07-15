@@ -35,11 +35,11 @@ public Action Timer_VetoCountdown(Handle timer) {
 static void AbortVeto() {
   Get5_MessageToAll("%t", "CaptainLeftOnVetoInfoMessage");
   Get5_MessageToAll("%t", "ReadyToResumeVetoInfoMessage");
-  ChangeState(Get5State_PreVeto);
+  ChangeState(GameState_PreVeto);
 }
 
 public void VetoFinished() {
-  ChangeState(Get5State_Warmup);
+  ChangeState(GameState_Warmup);
   Get5_MessageToAll("%t", "MapDecidedInfoMessage");
 
   // Use total series score as starting point, to not print skipped maps

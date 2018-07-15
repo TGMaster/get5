@@ -14,7 +14,7 @@ public Action StartKnifeRound(Handle timer) {
 }
 
 public Action Timer_AnnounceKnife(Handle timer) {
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 3; i++) {
     Get5_MessageToAll("%t", "KnifeInfoMessage");
   }
 
@@ -55,12 +55,12 @@ static void PerformSideSwap(bool swap) {
 public void EndKnifeRound(bool swap) {
   PerformSideSwap(swap);
   EventLogger_KnifeWon(g_KnifeWinnerTeam, swap);
-  ChangeState(Get5State_GoingLive);
+  ChangeState(GameState_GoingLive);
   CreateTimer(3.0, StartGoingLive, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 static bool AwaitingKnifeDecision(int client) {
-  bool waiting = g_GameState == Get5State_WaitingForKnifeRoundDecision;
+  bool waiting = g_GameState == GameState_WaitingForKnifeRoundDecision;
   bool onWinningTeam = IsPlayer(client) && GetClientMatchTeam(client) == g_KnifeWinnerTeam;
   bool admin = (client == 0);
   return waiting && (onWinningTeam || admin);
@@ -80,7 +80,7 @@ public Action Command_Swap(int client, int args) {
     EndKnifeRound(true);
     Get5_MessageToAll("%t", "TeamDecidedToSwapInfoMessage",
                       g_FormattedTeamNames[g_KnifeWinnerTeam]);
-  } else if (g_GameState == Get5State_Warmup && g_InScrimMode &&
+  } else if (g_GameState == GameState_Warmup && g_InScrimMode &&
              GetClientMatchTeam(client) == MatchTeam_Team1) {
     PerformSideSwap(true);
   }
@@ -113,7 +113,7 @@ public Action Command_T(int client, int args) {
 }
 
 public Action Timer_ForceKnifeDecision(Handle timer) {
-  if (g_GameState == Get5State_WaitingForKnifeRoundDecision) {
+  if (g_GameState == GameState_WaitingForKnifeRoundDecision) {
     EndKnifeRound(false);
     Get5_MessageToAll("%t", "TeamLostTimeToDecideInfoMessage",
                       g_FormattedTeamNames[g_KnifeWinnerTeam]);

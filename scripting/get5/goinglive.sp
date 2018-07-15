@@ -31,7 +31,7 @@ public Action StartGoingLive(Handle timer) {
 }
 
 public Action MatchLive(Handle timer) {
-  if (g_GameState == Get5State_None) {
+  if (g_GameState == GameState_None) {
     return Plugin_Handled;
   }
 
@@ -48,7 +48,7 @@ public Action MatchLive(Handle timer) {
   ConVar mp_match_restart_delay = FindConVar("mp_match_restart_delay");
   SetConVarInt(mp_match_restart_delay, GetTvDelay() + MATCH_END_DELAY_AFTER_TV + 5);
 
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 3; i++) {
     Get5_MessageToAll("%t", "MatchIsLiveInfoMessage");
   }
 

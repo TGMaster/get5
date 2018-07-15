@@ -257,7 +257,7 @@ stock void SetTeamInfo(int csTeam, const char[] name, const char[] flag = "",
 
   // Add Ready/Not ready tags to team name if in warmup.
   char taggedName[MAX_CVAR_LENGTH];
-  if ((g_GameState == Get5State_Warmup || g_GameState == Get5State_PreVeto) &&
+  if ((g_GameState == GameState_Warmup || g_GameState == GameState_PreVeto) &&
       !g_DoingBackupRestoreNow) {
     MatchTeam matchTeam = CSTeamToMatchTeam(csTeam);
     if (IsTeamReady(matchTeam)) {
@@ -524,25 +524,25 @@ stock void GetTeamString(MatchTeam team, char[] buffer, int len) {
   }
 }
 
-stock void GameStateString(Get5State state, char[] buffer, int length) {
+stock void GameStateString(GameState state, char[] buffer, int length) {
   switch (state) {
-    case Get5State_None:
+    case GameState_None:
       Format(buffer, length, "none");
-    case Get5State_PreVeto:
+    case GameState_PreVeto:
       Format(buffer, length, "waiting for map veto");
-    case Get5State_Veto:
+    case GameState_Veto:
       Format(buffer, length, "map veto");
-    case Get5State_Warmup:
+    case GameState_Warmup:
       Format(buffer, length, "warmup");
-    case Get5State_KnifeRound:
+    case GameState_KnifeRound:
       Format(buffer, length, "knife round");
-    case Get5State_WaitingForKnifeRoundDecision:
+    case GameState_WaitingForKnifeRoundDecision:
       Format(buffer, length, "waiting for knife round decision");
-    case Get5State_GoingLive:
+    case GameState_GoingLive:
       Format(buffer, length, "going live");
-    case Get5State_Live:
+    case GameState_Live:
       Format(buffer, length, "live");
-    case Get5State_PostGame:
+    case GameState_PostGame:
       Format(buffer, length, "postgame");
   }
 }
